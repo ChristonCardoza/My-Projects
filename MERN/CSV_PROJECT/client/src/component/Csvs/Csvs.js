@@ -16,7 +16,7 @@ const Csvs = ({ setCurrentId }) => {
             <Grid className={classes.container} container alignItems="stretch" spacing={3}>
                 {
                     csvs.map((csv) => (
-                        <Grid key={csv._id} item xs={12} sm={6}>
+                        <Grid key={csv._id} item xs={12} sm={6} md={6} lg={3}>
                             <Csv csv={csv} setCurrentId={ setCurrentId }  />
                         </Grid>
                     ))

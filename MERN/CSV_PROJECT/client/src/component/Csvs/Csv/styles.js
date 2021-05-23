@@ -45,13 +45,13 @@ export default makeStyles({
     padding: '0 16px',
   },
   cardActions: {
-    padding: '0 16px 8px 16px',
+    padding: '0 8px 8px 8px',
     display: 'flex',
     justifyContent: 'space-between',
   },
-  table: {
-    maxWidth: '100px',
-    backgroundColor: '#f5f5f5',
-  },
+  cardAction: {
+    display: 'block',
+    textAlign: 'initial',
+  }
 
 });

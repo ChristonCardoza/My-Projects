@@ -1,12 +1,19 @@
 import mongoose from 'mongoose';
 
-const csvSchema = mongoose.Schema({
+const csvDataSchema = mongoose.Schema({
 
     name: String,
     username: String,
     email: String,
     phone: String,
     website: String,
+    
+});
+
+const csvSchema = mongoose.Schema({
+
+    data: [csvDataSchema],
+    fileName: String,
     createdAt: {
         type: Date,
         default: new Date()

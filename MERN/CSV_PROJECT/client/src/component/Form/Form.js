@@ -1,77 +1,76 @@
-import React,{ useState, useEffect } from 'react';
-import { TextField, Button, Typography, Paper} from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import React,{ useState } from 'react';
+import { Button,  Paper, Typography} from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 import { parse } from 'papaparse';
 
 import useStyles from './styles';
-import { createCsv, updateCsv } from '../../actions/csvs';
+import { createCsv } from '../../actions/csvs';
 
-const Form = ({ currentId, setCurrentId }) => {
+const Form = () => {
 
     const classes = useStyles();
-    const [csvData, setCsvData] = useState({
-        name: '', username: '', email: '', phone: '', website: ''
-    });
+
+    const [csvFileName, setCsvFileName ] = useState();
+    const [csvUploadedData, setCsvUploadedData ] = useState();
+    const [isUploadEnable, setIsUploadEnable] = useState(true);
+
+
     const dispatch = useDispatch();
-    // console.log(currentId);
-    const csv = useSelector((state) => currentId ? state.csvs.find((sc) => sc._id === currentId) : null );
-    // console.log(csv);
-
-    useEffect(() => {
-        if(csv){
-            setCsvData(csv);
-            // console.log(csvData);
-        }
-    },[csv]);
     
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        // console.log(csvData);
-        
-        if(currentId){
-            dispatch(updateCsv(currentId, csvData));
-        } else {
-            dispatch(createCsv(csvData));
-        }
-        
-        clear();
-    }
-
-    const clear = () => {
-        setCurrentId(null);
-        setCsvData({ name: '', username: '', email: '', phone: '', website: '' });
-    }
-
     const onFileChange = async(e) => {
-        const filedata =  await e.target.files[0].text();
-        // console.log(filedata);
-        const result = parse(filedata, { header: true });
-        console.log(result);
+
+        const file=  await e.target.files[0];
+        if (file) {
+            const filedata =  await file.text();
+            setCsvFileName(file.name);
+            const result = parse(filedata, { header: true });
+            // console.log(result.data);
+            setCsvUploadedData(result.data);
+            setIsUploadEnable(false);
+        } 
+
     }
 
     const upload = () => {
+        const csvUpload = { data: csvUploadedData , fileName: csvFileName };
+        console.log(csvUpload);
+        dispatch(createCsv(csvUpload));
+        setIsUploadEnable(true);
+        document.getElementById("newForm").reset();
         
     }
 
+    const handleDownload = () => {
+        const templateData = 'name,username,email,phone,website';
+        download(templateData);
+    }
+
+    const download = function(data) {
+        const blob = new Blob([data], {type: 'text/csv'});
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.setAttribute('hidden', '');
+        a.setAttribute('href', url);
+        a.setAttribute('download', 'download.csv');
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeAttribute(a);
+
+    }
+
     return (
+
         <Paper className={classes.paper}>
-            <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-                <Typography variant="h6">{ currentId ? 'Editing' : 'Creating'} a Csv</Typography>
-                <TextField name="name" variant="outlined" label="Name" fullWidth value={csvData.name} onChange={(e) => setCsvData({ ...csvData,name: e.target.value})} />
-                <TextField name="username" variant="outlined" label="Username" fullWidth value={csvData.username} onChange={(e) => setCsvData({ ...csvData,username: e.target.value})} />
-                <TextField name="email" variant="outlined" label="Email" fullWidth value={csvData.email} onChange={(e) => setCsvData({ ...csvData,email: e.target.value})} />
-                <TextField name="phone" variant="outlined" label="Phone" fullWidth value={csvData.phone} onChange={(e) => setCsvData({ ...csvData,phone: e.target.value})} />
-                <TextField name="website" variant="outlined" label="Website" fullWidth value={csvData.website} onChange={(e) => setCsvData({ ...csvData,website: e.target.value})} />
-                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
-                <Button variant="contained" color="secondary" size="large" onClick={clear} fullWidth>Clear</Button>
-                {/* <Button variant="contained" component="label">Upload File<input type="file" /></Button> */}
-                <div className={classes.fileInput}><input type="file"  onChange={ onFileChange } /></div>
-                <Button variant="contained" size="large" onClick={upload} fullWidth>Upload</Button>
-                
+            <form id="newForm" autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} >
+                <Typography variant="h6">Creating a Csv</Typography>
+                <div className={classes.fileInput}><input type="file" accept=".csv"  onChange={ onFileChange } /></div>
+                <Button className={classes.buttonSubmit} variant="outlined" color="primary" size="large"  onClick={handleDownload} fullWidth>Download Template</Button>
+                <Button variant="outlined" color="secondary" size="large" disabled={isUploadEnable} onClick={upload} fullWidth>Upload</Button>
             </form>
-        </Paper>
+       </Paper>
+       
     );
 }
 
 export default Form;
+
