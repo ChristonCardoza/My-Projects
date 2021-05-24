@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-const url = 'http://localhost:5000/uploads';
+const API = axios.create({ baseURL: 'http://localhost:5000' });
 
-export const fetchCsvs = () =>  axios.get(url); 
-export const createCsv = (newCsv) =>  axios.post(url, newCsv);
-export const updateCsv = (id, updatedCsv) => axios.patch(`${url}/${id}`, updatedCsv);
-export const deleteCsv = (id) => axios.delete(`${url}/${id}`);
+export const fetchCsvs = () =>  API.get('/uploads'); 
+export const createCsv = (newCsv) =>  API.post('/uploads', newCsv);
+export const deleteCsv = (id) => API.delete(`/uploads/${id}`);

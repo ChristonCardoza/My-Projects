@@ -26,18 +26,6 @@ export const createCsv = async(req,res) => {
     }
 }
 
-export const updateCsv = async (req, res) => {
-    const { id: _id } = req.params;
-    const csv = req.body;
-    // console.log(csv);
-
-    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No csv with that id');
-
-    const updatedCsv = await UploadCSV.findByIdAndUpdate(_id, csv, {new: true} );
-
-    res.json(updatedCsv);
-}
-
 export const deleteCsv = async (req, res) => {
     const { id: _id } = req.params;
 

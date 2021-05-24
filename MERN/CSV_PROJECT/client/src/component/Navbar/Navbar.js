@@ -16,7 +16,7 @@ const Navbar = () => {
                 <img className={classes.image} src={csv} alt="csv" height="60" />
             </div>
             <Toolbar className={classes.toolbar}>
-                <Button component={Link} to="/table" variant="contained" className={classes.logout} color="secondary">Table</Button>
+                <Button component={Link} to="/table" variant="contained" className={classes.tableButton} color="secondary">View Csv Data</Button>
             </Toolbar>
             
         </AppBar>

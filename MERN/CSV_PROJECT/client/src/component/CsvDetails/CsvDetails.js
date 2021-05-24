@@ -46,8 +46,8 @@ const CsvDetails = () => {
     const csv = useSelector((state) => currentId ? state.csvs.find((p) => p._id === currentId) : null);
     
     const allRowData = [];
-    csv.data.map(row => {
-            allRowData.push(row);
+    csv?.data.map(row => {
+            return allRowData.push(row);
         })
     
    
@@ -72,7 +72,7 @@ const CsvDetails = () => {
     
     return (
 
-        <MaterialTable title="All Csv Data Table"
+        <MaterialTable title={csv?.fileName}
             data={ allRowData }
             columns={ columns }
             icons={tableIcons}
@@ -81,8 +81,20 @@ const CsvDetails = () => {
                 pageSize: 25,
                 pageSizeOptions : [ 25 ,50,100, 500 ],
                 filtering: true,
-                exportButton: true
+                exportButton: true,
+                headerStyle: {
+                    backgroundColor: '#039be5',
+                    color:' #ffffff',
+                    textAlign:' left'
+                },
+                cellStyle: {
+                    borderBottom: '1px solid #dddddd',
+                    backgroundColor: '#f3f3f3',
+                 
+                  }
+            
                 }
+                
             }
           
         

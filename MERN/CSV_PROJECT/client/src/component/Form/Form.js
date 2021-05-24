@@ -64,7 +64,7 @@ const Form = () => {
             <form id="newForm" autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} >
                 <Typography variant="h6">Creating a Csv</Typography>
                 <div className={classes.fileInput}><input type="file" accept=".csv"  onChange={ onFileChange } /></div>
-                <Button className={classes.buttonSubmit} variant="outlined" color="primary" size="large"  onClick={handleDownload} fullWidth>Download Template</Button>
+                <Button className={classes.buttonDownload} variant="outlined" color="primary" size="large"  onClick={handleDownload} fullWidth>Download Template</Button>
                 <Button variant="outlined" color="secondary" size="large" disabled={isUploadEnable} onClick={upload} fullWidth>Upload</Button>
             </form>
        </Paper>

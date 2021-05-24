@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from '@material-ui/core';
+import { Card, CardActions, CardMedia, Button, Typography, ButtonBase } from '@material-ui/core';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import DeleteIcon from '@material-ui/icons/Delete';
 import moment from 'moment';
@@ -7,14 +7,18 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom'
 
 import useStyles from './styles';
-import csvImage from '../../../images/csv.png';
+import csvImage1 from '../../../images/1.png';
+import csvImage2 from '../../../images/2.jpeg';
+import csvImage3 from '../../../images/3.png';
+import csvImage4 from '../../../images/4.png';
 import { deleteCsv } from '../../../actions/csvs';
 
     
-const Csv = ({ csv, setCurrentId }) => {
+const Csv = ({ csv }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
+    const images = [csvImage1, csvImage2, csvImage3, csvImage4];
     // console.log(csv);
 
 
@@ -82,7 +86,7 @@ const Csv = ({ csv, setCurrentId }) => {
 
         <Card className={classes.card} raised elevation={6} >
             <ButtonBase  className={classes.cardAction} component="span" onClick={openCsv} >
-                <CardMedia className={classes.media} image={csvImage} title={csv.fileName} />
+                <CardMedia className={classes.media} image={images[Math.floor(Math.random() * images.length)]} title={csv.fileName} />
                 <div className={classes.overlay}>
                     <Typography variant="h6">{csv.fileName}</Typography>
                     <Typography variant="body2">{moment(csv.createdAt).fromNow()}</Typography>

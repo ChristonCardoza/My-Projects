@@ -1,6 +1,7 @@
-import React, { forwardRef, useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { forwardRef } from 'react'
+import {  useSelector } from 'react-redux';
 import MaterialTable  from 'material-table';
+
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -17,6 +18,7 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -41,16 +43,15 @@ const tableIcons = {
 
 const Table = () => {
 
-    // const [pageReloader, setPageReloader] = useState(0);
-
     const csv = useSelector((state) => state.csvs );
+
     // console.log(csv);
     const allTableData = [];
-    csv.map(table => {
+    csv?.map(table => {
         // console.log(table.data);
-        table.data.map( row => {
+       return table?.data.map( row => {
             console.log(row);
-            allTableData.push(row);
+           return allTableData.push(row);
         })
         // allTableData.concat(table.data);
     })
@@ -58,10 +59,10 @@ const Table = () => {
     
     const columns= [
         {
-            title: 'Name', field:'name'
+            title: 'Name', field:'name'         
         },
         {
-            title: 'Username', field:'username'
+            title: 'Username', field:'username' 
         },
         {
             title: 'Email', field:'email'
@@ -75,14 +76,6 @@ const Table = () => {
 
     ]
 
-    // useEffect(() => {
-    //     allTableData= JSON.parse(window.localStorage.getItem('allCsvData'));
-    //  },[allTableData]);
-
-    // useEffect(() => {
-    //    window.localStorage.setItem('allCsvData',JSON.stringify(allTableData));
-    // });
-
     return (
 
         <MaterialTable title="All Csv Data Table"
@@ -94,7 +87,18 @@ const Table = () => {
                 pageSize: 25,
                 pageSizeOptions : [ 25 ,50,100, 500 ],
                 filtering: true,
-                exportButton: true
+                exportButton: true,
+                headerStyle: {
+                    backgroundColor: '#009879',
+                    color:' #ffffff',
+                    textAlign:' left'
+                },
+                cellStyle: {
+                    borderBottom: '1px solid #dddddd',
+                    backgroundColor: '#f3f3f3',
+                 
+                  }
+            
                 }
             }
           

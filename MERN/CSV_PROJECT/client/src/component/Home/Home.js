@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Container, Grow, Grid }  from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
@@ -12,7 +12,6 @@ const Home = () => {
 
     const classes = useStyles();
     const dispatch = useDispatch();
-    const [ currentId, setCurrentId ] = useState(null);
 
     useEffect(() => {
         dispatch(getCsvs());
@@ -23,10 +22,10 @@ const Home = () => {
             <Container maxWidth="xl">
                 <Grid className={classes.gridContainer} container justify="space-between" alignItems="stretch" spacing={3}>
                     <Grid item xs={12} sm={6} md={9}>
-                        <Csvs setCurrentId={setCurrentId} />
+                        <Csvs />
                     </Grid> 
                     <Grid item xs={12} sm={4} md={3}>
-                        <Form currentId={currentId} setCurrentId={setCurrentId} />
+                        <Form />
                     </Grid>
                 </Grid>
             </Container>
